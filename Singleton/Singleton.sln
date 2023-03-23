@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Singleton", "Singleton\Singleton.csproj", "{73BBDB79-DF8F-4737-A2A9-79868898450F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{73BBDB79-DF8F-4737-A2A9-79868898450F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73BBDB79-DF8F-4737-A2A9-79868898450F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73BBDB79-DF8F-4737-A2A9-79868898450F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73BBDB79-DF8F-4737-A2A9-79868898450F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EF247797-79E9-4467-833B-37F0B8B687D3}
+	EndGlobalSection
+EndGlobal
