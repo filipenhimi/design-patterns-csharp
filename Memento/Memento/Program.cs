@@ -1,15 +1,20 @@
 ﻿/*
-O padrão Memento é usado para capturar e armazenar o estado interno de um objeto sem violar o encapsulamento. 
+O padrão ConcreteMemento é usado para capturar e armazenar o estado interno de um objeto sem violar o encapsulamento. 
 Isso permite que o objeto seja restaurado posteriormente para o seu estado anterior. 
-Para implementar o padrão Memento, precisamos de três classes:
+Para implementar o padrão ConcreteMemento, precisamos de três classes:
 
 A classe Originator, que é a classe cujo estado desejamos salvar e restaurar.
-A classe Memento, que é uma classe auxiliar que armazena o estado interno do Originator.
-A classe Caretaker, que é responsável por armazenar e gerenciar os objetos Memento.
+A classe ConcreteMemento, que é uma classe auxiliar que armazena o estado interno do Originator.
+A classe Caretaker, que é responsável por armazenar e gerenciar os objetos ConcreteMemento.
 */
 
 // Classe Originator
-public class EditorTexto
+public interface IOriginator
+{
+    ConcreteMemento Salvar();
+}
+
+public class EditorTexto : IOriginator
 {
     private string texto;
 
@@ -24,13 +29,13 @@ public class EditorTexto
         texto += " " + novoTexto;
     }
 
-    public Memento Salvar()
+    public ConcreteMemento Salvar()
     {
         Console.WriteLine("Salvando estado. Texto atual: " + texto);
-        return new Memento(texto);
+        return new ConcreteMemento(texto);
     }
 
-    public void Restaurar(Memento memento)
+    public void Restaurar(ConcreteMemento memento)
     {
         texto = memento.GetText();
         Console.WriteLine("Estado restaurado. Texto atual: " + texto);
@@ -42,12 +47,18 @@ public class EditorTexto
     }
 }
 
-// Classe Memento
-public class Memento
-{
-    private string texto;
+// Classe ConcreteMemento
 
-    public Memento(string texto)
+public interface IMemento
+{
+    string GetText();
+}
+
+public class ConcreteMemento : IMemento
+{
+    private readonly string texto;
+
+    public ConcreteMemento(string texto)
     {
         this.texto = texto;
     }
@@ -59,16 +70,16 @@ public class Memento
 }
 
 // Classe Caretaker
-public class GerenciadorMemento
+public class CaretakerMemento
 {
-    private List<Memento> estadosSalvos = new List<Memento>();
+    private List<ConcreteMemento> estadosSalvos = new();
 
-    public void AdicionarMemento(Memento memento)
+    public void AdicionarMemento(ConcreteMemento memento)
     {
         estadosSalvos.Add(memento);
     }
 
-    public Memento GetMemento(int indice)
+    public ConcreteMemento GetMemento(int indice)
     {
         return estadosSalvos[indice];
     }
@@ -79,8 +90,8 @@ class Program
 {
     static void Main(string[] args)
     {
-        EditorTexto editor = new EditorTexto("Hello world!");
-        GerenciadorMemento gerenciador = new GerenciadorMemento();
+        EditorTexto editor = new("Hello world!");
+        CaretakerMemento gerenciador = new();
 
         editor.ExibirTexto();
 

@@ -1,92 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Elemento visitável
+public class Pessoa
+{
+    public string Nome { get; set; }
+    public int Idade { get; set; }
 
-// Interface para o visitante
+    public virtual void Accept(IVisitor visitor)
+    {
+        visitor.Visit(this);
+    }
+}
+
+// Interface visitante
 public interface IVisitor
 {
-    void Visit(ElementA elementA);
-    void Visit(ElementB elementB);
+    void Visit(Pessoa pessoa);
 }
 
 // Implementação do visitante
-public class ConcreteVisitor : IVisitor
+public class PessoaVisitor : IVisitor
 {
-    public void Visit(ElementA elementA)
+    public void Visit(Pessoa pessoa)
     {
-        Console.WriteLine($"Visitando {elementA.GetType().Name}...");
-    }
-
-    public void Visit(ElementB elementB)
-    {
-        Console.WriteLine($"Visitando {elementB.GetType().Name}...");
-    }
-}
-
-// Interface para o elemento visitável
-public interface IVisitable
-{
-    void Accept(IVisitor visitor);
-}
-
-// Implementação dos elementos visitáveis
-public class ElementA : IVisitable
-{
-    public void Accept(IVisitor visitor)
-    {
-        visitor.Visit(this);
-    }
-}
-
-public class ElementB : IVisitable
-{
-    public void Accept(IVisitor visitor)
-    {
-        visitor.Visit(this);
-    }
-}
-
-// Classe que mantém a lista de elementos e aceita visitantes
-public class ObjectStructure
-{
-    private List<IVisitable> _elements = new List<IVisitable>();
-
-    public void AddElement(IVisitable element)
-    {
-        _elements.Add(element);
-    }
-
-    public void RemoveElement(IVisitable element)
-    {
-        _elements.Remove(element);
-    }
-
-    public void Accept(IVisitor visitor)
-    {
-        foreach (var element in _elements)
+        if (pessoa.Idade >= 18)
         {
-            element.Accept(visitor);
+            Console.WriteLine($"{pessoa.Nome} é maior de idade.");
+        }
+        else
+        {
+            Console.WriteLine($"{pessoa.Nome} é menor de idade.");
         }
     }
 }
 
 /*
-Nesse exemplo, a interface IVisitor define o contrato para os visitantes, que são implementados pela classe ConcreteVisitor. 
-A interface IVisitable define o contrato para os elementos visitáveis, que são implementados pelas classes ElementA e ElementB. 
-A classe ObjectStructure mantém uma lista de elementos e permite que os visitantes acessem esses elementos por meio do método Accept. 
-O programa de exemplo cria uma estrutura de objetos com dois elementos, cria um visitante concreto e usa a estrutura para aceitar a visita do visitante. 
-O resultado é que cada elemento é visitado pelo visitante e a mensagem correspondente é exibida no console
+Neste exemplo, Pessoa é uma classe que representa uma pessoa, que possui um método Accept para receber um objeto visitante. 
+A interface IVisitor define o método Visit para o tipo Pessoa. 
+PessoaVisitor é uma implementação concreta de IVisitor que define o comportamento de Visit, verificando se a pessoa é maior ou menor de idade. 
+No método Main, dois objetos Pessoa são criados e o visitante PessoaVisitor é utilizado para visitar cada objeto, 
+imprimindo no console se a pessoa é maior ou menor de idade. 
 */
 class Program
 {
     static void Main(string[] args)
     {
-        var objectStructure = new ObjectStructure();
-        objectStructure.AddElement(new ElementA());
-        objectStructure.AddElement(new ElementB());
+        var pessoa1 = new Pessoa { Nome = "João", Idade = 20 };
+        var pessoa2 = new Pessoa { Nome = "Maria", Idade = 16 };        
 
-        var visitor = new ConcreteVisitor();
-        objectStructure.Accept(visitor);
+        var visitor = new PessoaVisitor();
 
-        Console.ReadLine();
+        pessoa1.Accept(visitor); // João é maior de idade.
+        pessoa2.Accept(visitor); // Maria é menor de idade.
     }
 }
